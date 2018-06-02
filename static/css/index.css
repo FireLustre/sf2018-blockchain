@@ -2,15 +2,19 @@
 .promise-rules,
 .promise-square,
 .promise-mine,
+.promise-content,
 .promise-vote {
     display: flex;
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: 100%;
     color: #ffffff;
+    transition: all .5s;
 }
 
 .welcome input {
@@ -35,15 +39,15 @@
 /*transform: translate(0px, -195px);*/
 /*}*/
 
-.promise-content {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    /*background-color: #bebebe;*/
-}
+/*.promise-content {*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    /*!*background-color: #bebebe;*!*/
+/*}*/
 
 .welcome .next {
     position: absolute;
@@ -88,11 +92,11 @@
 
 .promise-content .options label {
     position: absolute;
-    font-size: 12px;
+    font-size: 16px;
     left: 60px;
-    top: -8px;
+    top: -10px;
     color: #ffffff;
-    background-color: rgba(0, 0, 0, .5);
+    background-color: rgba(0, 0, 0, .7);
 }
 
 .promise-content .options .button {
@@ -113,6 +117,7 @@
     flex-direction: column;
     width: 300px;
     height: 100%;
+    margin: 50px 0px 0px 80px;
 }
 
 .left-menu ul {
@@ -178,6 +183,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-end;
+    transition: all .5s;
 }
 
 .home .button {
@@ -247,9 +253,10 @@
 }
 
 .topic-item {
+    position: relative;
     box-sizing: border-box;
     border: 1px solid #fff;
-    padding: 30px;
+    padding: 12px 20px;
     margin-top: 30px;
     width: 32%;
     margin-left: 1%;
@@ -309,8 +316,8 @@
 .vote-options {
     position: absolute;
     bottom: 30px;
-    left: 0;
-    width: 100%;
+    /* left: 0px; */
+    width: 90%;
     display: flex;
     justify-content: space-around;
 }
@@ -411,3 +418,17 @@
     color: #000;
 }
 
+.topic-item .date {
+    position: absolute;
+    bottom: 0;
+    right: 20px;
+    font-size: 14px;
+}
+
+.in {
+    transform: translate(0, 0);
+}
+
+.out {
+    transform: translate(0, 100%);
+}
