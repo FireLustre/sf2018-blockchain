@@ -3,16 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!--<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
     <!--integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
     <link href="https://cdn.bootcss.com/font-awesome/4.6.1/css/font-awesome.css" rel="stylesheet">
     <style>
-        .promise-content .options {
-
-        }
+        .promise-content .options {}
     </style>
     <link rel="stylesheet" href="static/css/common.css">
     <link rel="stylesheet" href="static/css/index.css">
@@ -20,333 +17,166 @@
 </head>
 
 <body>
-<div id="app">
-    <!--<div style="position: absolute;">{{username}}</div>-->
-    <div class="username-modal-mask" :class="username_flag ? 'in':'out'">
-        <div class="username-modal">
-            <!--<div class="modal-title">-->
-            <!--请输入用户名-->
-            <!--</div>-->
-            <div class="modal-body">
-                <input type="text" placeholder="请输入用户名" v-model="username">
-                <div class="button" @click="setUsername">
-                    确定
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="left-menu">
-        <img src="./static/img/logo.png" class="logo">
-        <div class="slogan">
-            <p>SEEK YOUR TRUTH</p>
-        </div>
-        <ul>
-            <li :class="(is_home)?'active':''"><a href="#" @click="home">首页</a></li>
-            <li :class="(is_mine)?'active':''"><a href="#" @click="mine">我的</a></li>
-            <li :class="(is_square)?'active':''"><a href="#" @click="square">话题广场</a></li>
-            <li :class="(is_rules)?'active':''"><a href="#" @click="rules">规则说明</a></li>
-        </ul>
-    </div>
-    <div class="right-wrapper">
-        <div class="home" :class="is_home ? 'in':'out'">
-            <div class="button" @click="next">
-                发起Topic
-            </div>
-        </div>
-        <!--<div class="welcome" v-show="is_welcome">-->
-        <!--<div class="username-modal">-->
-        <!---->
-        <!--</div>-->
-        <!--</div>-->
-        <div class="promise-content" :class="is_content ? 'in':'out'">
-            <!--<div @click="prev">上一步</div>-->
-            <!--<h2>{{promise_title}}</h2>-->
-            <div class="form">
-                <div class="options true">
-                    <label for="title">Promise 的标题</label>
-                    <input id="title" type="text" placeholder="Promise 的标题" v-model="promise_title">
-                </div>
-                <div class="options true">
-                    <label for="true">请输入观点一</label>
-                    <input id="true" type="text" placeholder="请输入观点一" v-model="promise_true">
-                </div>
-                <div class="options false">
-                    <label for="false">请输入观点二</label>
-                    <input id="false" type="text" placeholder="请输入观点二" v-model="promise_false">
-                </div>
-                <div class="options addtional">
-                    <label for="extra">输入附加内容</label>
-                    <input id="extra" type="text" placeholder="请输入附加内容" v-model="promise_extra">
-                </div>
-                <!--<div class="options">-->
-                <!--<label for="startTime"></label>-->
-                <!--<input type="datetime-local" id="startTime" v-model="startTime">-->
+    <div id="app">
+        <!--<div style="position: absolute;">{{username}}</div>-->
+        <div class="username-modal-mask" :class="username_flag ? 'in':'out'">
+            <div class="username-modal">
+                <!--<div class="modal-title">-->
+                <!--请输入用户名-->
                 <!--</div>-->
+                <div class="modal-body">
+                    <input type="text" placeholder="请输入用户名" v-model="username">
+                    <div class="button" @click="setUsername">
+                        确定
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="left-menu">
+            <img src="./static/img/logo.png" class="logo">
+            <div class="slogan">
+                <p>SEEK YOUR TRUTH</p>
+            </div>
+            <ul>
+                <li :class="(is_home)?'active':''">
+                    <a href="#" @click="home">首页</a>
+                </li>
+                <li :class="(is_mine)?'active':''">
+                    <a href="#" @click="mine">我的</a>
+                </li>
+                <li :class="(is_square)?'active':''">
+                    <a href="#" @click="square">话题广场</a>
+                </li>
+                <li :class="(is_rules)?'active':''">
+                    <a href="#" @click="rules">规则说明</a>
+                </li>
+            </ul>
+        </div>
+        <div class="right-wrapper">
+            <div class="home" :class="is_home ? 'in':'out'">
+                <div class="button" @click="next">
+                    发起Topic
+                </div>
+            </div>
+            <!--<div class="welcome" v-show="is_welcome">-->
+            <!--<div class="username-modal">-->
+            <!---->
+            <!--</div>-->
+            <!--</div>-->
+            <div class="promise-content" :class="is_content ? 'in':'out'">
+                <!--<div @click="prev">上一步</div>-->
+                <!--<h2>{{promise_title}}</h2>-->
+                <div class="form">
+                    <div class="options true">
+                        <label for="title">Promise 的标题</label>
+                        <input id="title" type="text" placeholder="Promise 的标题" v-model="promise_title">
+                    </div>
+                    <div class="options true">
+                        <label for="true">请输入观点一</label>
+                        <input id="true" type="text" placeholder="请输入观点一" v-model="promise_true">
+                    </div>
+                    <div class="options false">
+                        <label for="false">请输入观点二</label>
+                        <input id="false" type="text" placeholder="请输入观点二" v-model="promise_false">
+                    </div>
+                    <div class="options addtional">
+                        <label for="extra">输入附加内容</label>
+                        <input id="extra" type="text" placeholder="请输入附加内容" v-model="promise_extra">
+                    </div>
+                    <!--<div class="options">-->
+                    <!--<label for="startTime"></label>-->
+                    <!--<input type="datetime-local" id="startTime" v-model="startTime">-->
+                    <!--</div>-->
 
-                <div class="options">
-                    <label for="endTime">结束时间</label>
-                    <input type="datetime-local" id="endTime" v-model="endTime">
-                </div>
-                <div class="options">
-                    <div class="button" @click="submit">提交</div>
+                    <div class="options">
+                        <label for="endTime">结束时间</label>
+                        <input type="datetime-local" id="endTime" v-model="endTime">
+                    </div>
+                    <div class="options">
+                        <div class="button" @click="submit">提交</div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="promise-rules" :class=" is_rules ? 'in':'out'">
-            <div class="rules-wrapper">
-                <header>规则说明</header>
-                <ul>
-                    <li>首先需要发起一个话题，可以分享给你的好友或公开</li>
-                    <li>用户可参与话题，并选择支持的观点 A OR B</li>
-                    <li>话题终止后，双方会根据输赢分配代币</li>
-                </ul>
+            <div class="promise-rules" :class=" is_rules ? 'in':'out'">
+                <div class="rules-wrapper">
+                    <header>规则说明</header>
+                    <ul>
+                        <li>首先需要发起一个话题，可以分享给你的好友或公开</li>
+                        <li>用户可参与话题，并选择支持的观点 A OR B</li>
+                        <li>话题终止后，双方会根据输赢分配代币</li>
+                    </ul>
+                </div>
             </div>
-        </div>
 
-        <div class="promise-square" :class="is_square ? 'in':'out'">
-            <div class="square-wrapper">
-                <i class="fa fa-search"
-                   style="position: fixed; right: 5% ;margin-top:-80px;color:#fff; font-size: 30px"></i>
-                <div class="topic-item" @click="vote(item.id)" v-for="item in squareList" :key="item.title">
-                    <h2>{{item.title}}</h2>
-                    <p style="font-size: 16px ;transform: translate(0,10px)">发起者：{{item.author}}</p>
-                    <p class="date">截止：{{new Date(item.limit_time*1000).toLocaleString()}}</p>
-                    <!--<p>内容：{{item.content}}</p>-->
-                </div>
-            </div>
-        </div>
-        <div class="promise-mine" :class="is_mine ? 'in':'out'">
-            <div class="my-fortune">
-                <header>我的代币</header>
-                <div class="fortune-value">20</div>
-            </div>
-            <div class="my-topic">
-                <header>我的话题</header>
-                <div class="topic-list" v-if="mineList.length">
-                    <div class="topic-item" @click="vote(item.id)" v-for="item in mineList" :key="item.title">
+            <div class="promise-square" :class="is_square ? 'in':'out'">
+                <div class="square-wrapper">
+                    <i class="fa fa-search" style="position: fixed; right: 5% ;margin-top:-80px;color:#fff; font-size: 30px"></i>
+                    <div class="topic-item" @click="vote(item.id)" v-for="item in squareList" :key="item.title">
                         <h2>{{item.title}}</h2>
-                        <!--<p style="font-size: 15px ;transform: translate(0,10px)">发起者：{{item.author}}</p>-->
-                        <p>{{item.content}}</p>
-                        <p class="date">{{new Date(item.limit_time*1000).toLocaleString()}}</p>
+                        <p style="font-size: 16px ;transform: translate(0,10px)">发起者：{{item.author}}</p>
+                        <p class="date">截止：{{new Date(item.limit_time*1000).toLocaleString()}}</p>
                         <!--<p>内容：{{item.content}}</p>-->
                     </div>
                 </div>
-                <div v-else style="color:#999; height: 200px; padding-top: 50px">
-                    还没有与你相关的话题
+            </div>
+            <div class="promise-mine" :class="is_mine ? 'in':'out'">
+                <div class="my-fortune">
+                    <header>我的代币</header>
+                    <div class="fortune-value">20</div>
+                </div>
+                <div class="my-topic">
+                    <header>我的话题</header>
+                    <div class="topic-list" v-if="mineList.length">
+                        <div class="topic-item" @click="vote(item.id)" v-for="item in mineList" :key="item.title">
+                            <h2>{{item.title}}</h2>
+                            <!--<p style="font-size: 15px ;transform: translate(0,10px)">发起者：{{item.author}}</p>-->
+                            <p>{{item.content}}</p>
+                            <p class="date">{{new Date(item.limit_time*1000).toLocaleString()}}</p>
+                            <!--<p>内容：{{item.content}}</p>-->
+                        </div>
+                    </div>
+                    <div v-else style="color:#999; height: 200px; padding-top: 50px">
+                        还没有与你相关的话题
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="promise-vote" :class="is_vote ? 'in':'out'">
-            <div class="vote-wrapper">
-                <div class="vote-title">
-                    {{voteData.title}}
-                </div>
-                <div>发起人：{{voteData.author}}</div>
-                <div class="vote-datetime">
-                    截止时间：{{new Date(voteData.limit_time*1000).toLocaleString()}}
-                </div>
-                <div class="vote-info">
-                    内容：{{voteData.content}}
-                </div>
-                <div v-show="!(Date.now()<voteData.limit_time*1000 && username !== voteData.author && voteData.voted.indexOf(username) === -1)"
-                     class="vote-options">
-                    <h2>支持票数:</h2>
-                    <h2>
-                        {{voteData.option1}}: {{voteData.option1_num}}（票）
-                    </h2>
-                    <h2>
-                        {{voteData.option2}}: {{voteData.option2_num}}（票）
-                    </h2>
-                </div>
-                <div class="vote-options"
-                     v-show="(Date.now()<voteData.limit_time*1000 && username !== voteData.author && voteData.voted.indexOf(username) === -1)">
-                    <div class="vote-option" :title="voteData.option1" @click="makeVote(1)">
-                        {{voteData.option1}}
+            <div class="promise-vote" :class="is_vote ? 'in':'out'">
+                <div class="vote-wrapper">
+                    <div class="vote-title">
+                        {{voteData.title}}
                     </div>
-                    <div class="vote-option" :title="voteData.option2" @click="makeVote(2)">
-                        {{voteData.option2}}
+                    <div>发起人：{{voteData.author}}</div>
+                    <div class="vote-datetime">
+                        截止时间：{{new Date(voteData.limit_time*1000).toLocaleString()}}
+                    </div>
+                    <div class="vote-info">
+                        内容：{{voteData.content}}
+                    </div>
+                    <div v-show="!(Date.now()<voteData.limit_time*1000 && username !== voteData.author && voteData.voted.indexOf(username) === -1)"
+                        class="vote-options">
+                        <h2>支持票数:</h2>
+                        <h2>
+                            {{voteData.option1}}: {{voteData.option1_num}}（票）
+                        </h2>
+                        <h2>
+                            {{voteData.option2}}: {{voteData.option2_num}}（票）
+                        </h2>
+                    </div>
+                    <div class="vote-options" v-show="(Date.now()<voteData.limit_time*1000 && username !== voteData.author && voteData.voted.indexOf(username) === -1)">
+                        <div class="vote-option" :title="voteData.option1" @click="makeVote(1)">
+                            {{voteData.option1}}
+                        </div>
+                        <div class="vote-option" :title="voteData.option2" @click="makeVote(2)">
+                            {{voteData.option2}}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </body>
 <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-<script>
-  new Vue({
-    el: '#app',
-    data: {
-      is_welcome: false,
-      is_content: false,
-      is_home: true,
-      is_rules: false,
-      is_mine: false,
-      is_square: false,
-      is_vote: false,
-      promise_title: '',
-      promise_true: '',
-      promise_false: '',
-      promise_extra: '',
-      username: '',
-      endTime: '',
-      username_flag: false,
-      squareList: [],
-      mineList: [],
-      voteData: {
-        author: '',
-        id: '',
-        option1: '',
-        option1_num: '',
-        option2: '',
-        option2_num: '',
-        title: '',
-        content: '',
-        answer: '',
-        voted: [],
-      },
-    },
-    methods: {
-      setUsername() {
-        const username = this.username;
-        localStorage.setItem('username', username);
-        this.username_flag = false;
-      },
-      home() {
-        this.is_content = false;
-        this.is_home = true;
-        this.is_welcome = false;
-        this.is_rules = false;
-        this.is_square = false;
-        this.is_mine = false;
-        this.is_vote = false;
-        this.username_flag = false;
-      },
-      next() {
-        const flag = this.checkUser();
-        if (!flag) {
-          this.is_welcome = false;
-          this.is_content = true;
-          this.is_home = false;
-          this.is_rules = false;
-          this.is_square = false;
-          this.is_mine = false;
-          this.is_vote = false;
-        }
-      },
-      prev() {
-        this.is_content = false;
-        this.is_welcome = true;
-        this.is_rules = false;
-        this.is_square = false;
-        this.is_mine = false;
-        this.is_vote = false;
-        this.username_flag = false;
-      },
-      rules() {
-        this.is_content = false;
-        this.is_welcome = false;
-        this.is_home = false;
-        this.is_rules = true;
-        this.is_square = false;
-        this.is_mine = false;
-        this.is_vote = false;
-        this.username_flag = false;
-      },
-      square() {
-        const self = this;
-        self.is_content = false;
-        self.is_welcome = false;
-        self.is_home = false;
-        self.is_rules = false;
-        self.is_square = true;
-        self.is_mine = false;
-        self.is_vote = false;
-        self.username_flag = false;
-        const url = 'http://sf.avatars.vip/api/v1/articles';
-        $.get(url, { 'per-page': 20 }, (data) => {
-          self.squareList = data;
-        });
-      },
-      mine() {
-        const self = this;
-        const flag = self.checkUser();
-        if (!flag) {
-          self.is_content = false;
-          self.is_welcome = false;
-          self.is_home = false;
-          self.is_rules = false;
-          self.is_square = false;
-          self.is_mine = true;
-          self.is_vote = false;
-          const url = 'http://sf.avatars.vip/api/v1/articles';
-          const username = self.username;
-          $.get(url, { author: username, 'per-page': 100 }, (data) => {
-            self.mineList = data;
-          });
-        }
-      },
-      vote(id) {
-        const flag = this.checkUser();
-        const self = this;
-        if (!flag) {
-          this.is_content = false;
-          this.is_welcome = false;
-          this.is_home = false;
-          this.is_rules = false;
-          this.is_square = false;
-          this.is_mine = false;
-          this.is_vote = true;
-          const url = `http://sf.avatars.vip/api/v1/articles/${id}`;
-          $.get(url, (data) => {
-            self.voteData = data;
-          });
-        }
-
-      },
-      checkUser() {
-        const username = localStorage.getItem('username');
-        if (username === null) {
-          this.username_flag = true;
-        } else {
-          this.username = username;
-        }
-        return this.username_flag;
-      },
-      submit() {
-        const self = this;
-        const url = 'http://sf.avatars.vip/api/v1/articles';
-        const data = {
-          title: self.promise_title,
-          author: self.username,
-          content: self.promise_extra,
-          option1: self.promise_true,
-          option2: self.promise_false,
-          limit_time: Math.ceil(new Date(self.endTime).valueOf() / 1000),
-        };
-        $.post(url, data, () => {
-          self.mine();
-        });
-      },
-      makeVote(value) {
-        const self = this;
-        const username = self.username;
-        const id = self.voteData.id;
-        const url = `http://sf.avatars.vip/api/v1/articles/vote`;
-        const data = {
-          aid: id,
-          author: username,
-          option: value,
-        };
-        $.post(url, data, (res) => {
-          self.vote(id);
-        });
-      },
-    },
-    beforeMount() {
-    },
-  });
-</script>
+<script src="./static/js/index.js"></script>
 
 </html>
