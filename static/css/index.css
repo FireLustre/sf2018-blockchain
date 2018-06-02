@@ -1,0 +1,47 @@
+.welcome {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: #eee;
+}
+
+.welcome input {
+    height: 56px;
+    width: 68%;
+    border-radius: 2px;
+    border: none;
+    padding-left: 10px;
+    font-size: 15px;
+    transform: translate(0px,-145px);
+}
+
+.welcome .next {
+    position: absolute;
+    bottom: 6px;
+    right: 30px;
+}
+
+.logo {
+    font-size: 32px;
+    transform: translate(0px,-195px);
+}
+
+.promise-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #bebebe;
+}
+
+.welcome .next {
+    position: absolute;
+    bottom: 6px;
+    right: 30px;
+}
