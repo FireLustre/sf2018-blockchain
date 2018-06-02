@@ -16,14 +16,18 @@
             overflow: hidden;
         }
 
+        #app {
+            max-width: 24em;
+            min-width: 24em;
+        }
+
         .welcome {
             display: flex;
             position: relative;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            max-width: 24em;
-            min-width: 24em;
+            width: 100%;
             height: 100%;
             background-color: #eee;
         }
@@ -44,26 +48,57 @@
         .logo {
             font-size: 30px;
         }
+
+        .promise-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #bebebe;
+        }
     </style>
     <title>Promise</title>
 </head>
 <body>
 <div id="app">
-    <div class="welcome">
+    <div class="welcome" v-show="is_welcome">
         <h1 class="logo">
             Promise
         </h1>
-        <input type="text" placeholder="请输入PROMISE">
-        <div class="next"><i class="fa fa-"></i></div>
+        <input type="text" placeholder="请输入PROMISE" v-model="promise_title">
+        <div class="next" @click="next">许下 Promise <i class="fa fa-angle-right"></i></div>
+    </div>
+    <div class="promise-content" v-show="is_content">
+        <div>上一步</div>
+        <h2>{{promise_title}}</h2>
+        <div class="options true">
+            <label for="true"></label>
+            <input id="true" type="text" placeholder="请输入正面的结果">
+        </div>
+        <div class="options false">
+            <label for="false"></label>
+            <input id="false" type="text" placeholder="请输入反面的结果">
+        </div>
     </div>
 </div>
 </body>
-<script src="https://cdn.bootcss.com/vue/2.5.16/vue.common.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
 <script>
-  const vue = new Vue({
+  new Vue({
     el: '#app',
-    data: {},
-    methods: {},
+    data: {
+      is_welcome: true,
+      is_content: false,
+      promise_title: '',
+    },
+    methods: {
+      next() {
+        this.is_welcome = false;
+        this.is_content = true;
+      },
+    },
   });
 </script>
 </html>
