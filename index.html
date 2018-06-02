@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="zh-cn">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -68,26 +69,31 @@
 
         }
     </style>
+    <link rel="stylesheet" href="static/css/common.css">
+    <link rel="stylesheet" href="static/css/index.css">
     <title>Promise</title>
 </head>
+
 <body>
 <div id="app">
     <div class="welcome" v-show="is_welcome">
         <h1 class="logo">
             Promise
         </h1>
-        <input type="text" placeholder="请输入PROMISE" v-model="promise_title">
-        <div class="next" @click="next">许下 Promise <i class="fa fa-angle-right"></i></div>
+        <input type="text" placeholder="快来发起一个独一无二的promise" v-model="promise_title">
+        <div class="next" @click="next">许下 Promise
+            <i class="fa fa-angle-right"></i>
+        </div>
     </div>
     <div class="promise-content" v-show="is_content">
         <div>上一步</div>
         <h2>{{promise_title}}</h2>
         <div class="options true">
-            <label for="true">正向结果</label>
+            <label for="true"></label>
             <input id="true" type="text" placeholder="请输入正面的结果">
         </div>
         <div class="options false">
-            <label for="false">反向结果</label>
+            <label for="false"></label>
             <input id="false" type="text" placeholder="请输入反面的结果">
         </div>
     </div>
@@ -110,4 +116,5 @@
     },
   });
 </script>
+
 </html>
