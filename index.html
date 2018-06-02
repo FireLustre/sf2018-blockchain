@@ -6,8 +6,8 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!--<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
+    <!--integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
     <link href="https://cdn.bootcss.com/font-awesome/4.6.1/css/font-awesome.css" rel="stylesheet">
     <style>
         .promise-content .options {
@@ -21,63 +21,105 @@
 
 <body>
 <div id="app">
+    <div class="left-menu">
+        <img src="./static/img/logo.png" class="logo">
+        <div class="slogan">
+            <p>SELECTING A OR B</p>
+        </div>
+        <ul>
+            <li><a href="#" @click="home">首页</a></li>
+            <li><a href="#">我的</a></li>
+            <li><a href="#">话题广场</a></li>
+            <li><a href="#">规则说明</a></li>
+        </ul>
+    </div>
+    <div class="home" v-show="is_home">
+        <div class="button" @click="next">
+            发起Promise
+        </div>
+
+    </div>
     <div class="welcome" v-show="is_welcome">
-        <h1 class="logo">
-            Promise
-        </h1>
+        <!--<h1 class="logo">-->
+        <!--Promise-->
+        <!--</h1>-->
         <input type="text" placeholder="快来发起一个独一无二的promise" v-model="promise_title">
         <div class="next" @click="next">许下 Promise
             <i class="fa fa-angle-right"></i>
         </div>
     </div>
     <div class="promise-content" v-show="is_content">
-        <div @click="prev">上一步</div>
-        <h2>{{promise_title}}</h2>
-        <div class="options true" v-model="promise_true">
-            <label for="true"></label>
-            <input id="true" type="text" placeholder="请输入正面的结果">
-        </div>
-        <div class="options false" v-model="promise_false">
-            <label for="false"></label>
-            <input id="false" type="text" placeholder="请输入反面的结果">
-        </div>
-        <div class="options addtional" v-model="promise_extra">
-            <label for="addtional"></label>
-            <input id="addtional" type="text" placeholder="请输入附加内容">
-        </div>
+        <!--<div @click="prev">上一步</div>-->
+        <!--<h2>{{promise_title}}</h2>-->
+        <div class="form">
+            <div class="options true" v-model="promise_title">
+                <label for="true">Promise 的标题</label>
+                <input id="true" type="text" placeholder="Promise 的标题">
+            </div>
+            <div class="options true" v-model="promise_true">
+                <label for="true">正面的结果</label>
+                <input id="true" type="text" placeholder="请输入正面的结果">
+            </div>
+            <div class="options false" v-model="promise_false">
+                <label for="false">反面的结果</label>
+                <input id="false" type="text" placeholder="请输入反面的结果">
+            </div>
+            <div class="options addtional" v-model="promise_extra">
+                <label for="extra">输入附加内容</label>
+                <input id="extra" type="text" placeholder="请输入附加内容">
+            </div>
+            <!--<div class="options">-->
+            <!--<label for="startTime"></label>-->
+            <!--<input type="datetime-local" id="startTime" v-model="startTime">-->
+            <!--</div>-->
 
-        <div class="options">
-            <div class="button" @click="submit">提交</div>
+            <div class="options">
+                <label for="endTime">结束时间</label>
+                <input type="datetime-local" id="endTime" v-model="endTime">
+            </div>
+            <div class="options">
+                <div class="button" @click="submit">提交</div>
+            </div>
         </div>
+    </div>
+    <div class="promise-rules">
+
     </div>
 </div>
 </body>
 <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
 <script>
-  // new Vue({
-  //   el: '#app',
-  //   data: {
-  //     is_welcome: true,
-  //     is_content: false,
-  //     promise_title: '',
-  //     promise_true: '',
-  //     promise_false: '',
-  //     promise_extra: '',
-  //   },
-  //   methods: {
-  //     next() {
-  //       this.is_welcome = false;
-  //       this.is_content = true;
-  //     },
-  //     prev() {
-  //       this.is_content = false;
-  //       this.is_welcome = true;
-  //     },
-  //     submit() {
-  //
-  //     },
-  //   },
-  // });
+  new Vue({
+    el: '#app',
+    data: {
+      is_welcome: false,
+      is_content: false,
+      is_home: true,
+      promise_title: '',
+      promise_true: '',
+      promise_false: '',
+      promise_extra: '',
+    },
+    methods: {
+      home() {
+        this.is_content = false;
+        this.is_home = true;
+        this.is_welcome = false;
+      },
+      next() {
+        this.is_welcome = false;
+        this.is_content = true;
+        this.is_home = false;
+      },
+      prev() {
+        this.is_content = false;
+        this.is_welcome = true;
+      },
+      submit() {
+        
+      },
+    },
+  });
 </script>
 
 </html>
