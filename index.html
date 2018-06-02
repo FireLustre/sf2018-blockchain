@@ -29,7 +29,7 @@
         </div>
     </div>
     <div class="promise-content" v-show="is_content">
-        <div>上一步</div>
+        <div @click="prev">上一步</div>
         <h2>{{promise_title}}</h2>
         <div class="options true">
             <label for="true"></label>
@@ -38,6 +38,14 @@
         <div class="options false">
             <label for="false"></label>
             <input id="false" type="text" placeholder="请输入反面的结果">
+        </div>
+        <div class="options addtional">
+            <label for="addtional"></label>
+            <input id="addtional" type="text" placeholder="请输入附加内容">
+        </div>
+
+        <div class="options">
+            <div class="button">提交</div>
         </div>
     </div>
 </div>
@@ -55,6 +63,10 @@
       next() {
         this.is_welcome = false;
         this.is_content = true;
+      },
+      prev() {
+        this.is_content = false;
+        this.is_welcome = true;
       },
     },
   });

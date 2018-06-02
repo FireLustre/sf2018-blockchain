@@ -16,7 +16,7 @@
     border: none;
     padding-left: 10px;
     font-size: 15px;
-    transform: translate(0px,-145px);
+    transform: translate(0px, -145px);
 }
 
 .welcome .next {
@@ -27,7 +27,7 @@
 
 .logo {
     font-size: 32px;
-    transform: translate(0px,-195px);
+    transform: translate(0px, -195px);
 }
 
 .promise-content {
@@ -59,4 +59,19 @@
 .promise-content input {
     width: 70%;
     height: 34px;
+}
+
+.promise-content .options {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.promise-content .options .button {
+    width: 72%;
+    height: 34px;
+    text-align: center;
+    background-color: #2d8cf0;
+    color: #fff;
 }
