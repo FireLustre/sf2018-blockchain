@@ -45,3 +45,18 @@
     bottom: 6px;
     right: 30px;
 }
+
+.promise-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #bebebe;
+}
+
+.promise-content input {
+    width: 70%;
+    height: 34px;
+}
