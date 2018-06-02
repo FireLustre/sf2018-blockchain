@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
+    <!--integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+    <link href="https://cdn.bootcss.com/font-awesome/4.6.1/css/font-awesome.css" rel="stylesheet">
+    <style>
+        .promise-content .options {
+
+        }
+    </style>
+    <link rel="stylesheet" href="static/css/common.css">
+    <link rel="stylesheet" href="static/css/index.css">
+    <title>Promise</title>
+</head>
+
+<body>
+<div id="app">
+    <!--<div style="position: absolute;">{{username}}</div>-->
+    <div class="username-modal-mask" v-show="username_flag">
+        <div class="username-modal">
+            <!--<div class="modal-title">-->
+            <!--请输入用户名-->
+            <!--</div>-->
+            <div class="modal-body">
+                <input type="text" placeholder="请输入用户名" v-model="username">
+                <div class="button" @click="setUsername">
+                    确定
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="left-menu">
+        <img src="./static/img/logo.png" class="logo">
+        <div class="slogan">
+            <p>SELECTING A OR B</p>
+        </div>
+        <ul>
+            <li :class="(is_home)?'active':''"><a href="#" @click="home">首页</a></li>
+            <li :class="(is_mine)?'active':''"><a href="#" @click="mine">我的</a></li>
+            <li :class="(is_square)?'active':''"><a href="#" @click="square">话题广场</a></li>
+            <li :class="(is_rules)?'active':''"><a href="#" @click="rules">规则说明</a></li>
+        </ul>
+    </div>
+    <div class="home" v-show="is_home">
+        <div class="button" @click="next">
+            发起Promise
+        </div>
+    </div>
+    <!--<div class="welcome" v-show="is_welcome">-->
+    <!--<div class="username-modal">-->
+    <!---->
+    <!--</div>-->
+    <!--</div>-->
+    <div class="promise-content" v-show="is_content">
+        <!--<div @click="prev">上一步</div>-->
+        <!--<h2>{{promise_title}}</h2>-->
+        <div class="form">
+            <div class="options true">
+                <label for="true">Promise 的标题</label>
+                <input id="true" type="text" placeholder="Promise 的标题" v-model="promise_title">
+            </div>
+            <div class="options true">
+                <label for="true">正面的结果</label>
+                <input id="true" type="text" placeholder="请输入正面的结果" v-model="promise_true">
+            </div>
+            <div class="options false">
+                <label for="false">反面的结果</label>
+                <input id="false" type="text" placeholder="请输入反面的结果" v-model="promise_false">
+            </div>
+            <div class="options addtional">
+                <label for="extra">输入附加内容</label>
+                <input id="extra" type="text" placeholder="请输入附加内容" v-model="promise_extra">
+            </div>
+            <!--<div class="options">-->
+            <!--<label for="startTime"></label>-->
+            <!--<input type="datetime-local" id="startTime" v-model="startTime">-->
+            <!--</div>-->
+
+            <div class="options">
+                <label for="endTime">结束时间</label>
+                <input type="datetime-local" id="endTime" v-model="endTime">
+            </div>
+            <div class="options">
+                <div class="button" @click="submit">提交</div>
+            </div>
+        </div>
+    </div>
+    <div class="promise-rules" v-show="is_rules">
+        <div class="rules-wrapper">
+            <header>规则说明</header>
+            <ul>
+                <li>首先需要发起一个话题，可以分享给你的好友或公开</li>
+                <li>用户可参与话题，并选择支持的观点 A OR B</li>
+                <li>话题终止后，双方会根据输赢分配代币</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="promise-square" v-show="is_square">
+        <div class="square-wrapper">
+            <div class="topic-item" @click="vote(item.id)" v-for="item in squareList" :key="item.title">
+                <h2>{{item.title}}</h2>
+                <p style="font-size: 15px ;transform: translate(0,10px)">发起者：{{item.author}}</p>
+                <p>{{new Date(item.limit_time*1000).toLocaleString()}}</p>
+                <!--<p>内容：{{item.content}}</p>-->
+            </div>
+        </div>
+    </div>
+    <div class="promise-mine" v-show="is_mine">
+        <div class="my-fortune">
+            <header>我的代币</header>
+            <div class="fortune-value">20</div>
+        </div>
+        <div class="my-topic">
+            <header>我的话题</header>
+            <div class="topic-list">
+                <div class="topic-item" @click="vote(item.id)" v-for="item in mineList" :key="item.title">
+                    <h2>{{item.title}}</h2>
+                    <p style="font-size: 15px ;transform: translate(0,10px)">发起者：{{item.author}}</p>
+                    <p>{{new Date(item.limit_time*1000).toLocaleString()}}</p>
+                    <!--<p>内容：{{item.content}}</p>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="promise-vote" v-show="is_vote">
+        <div class="vote-wrapper">
+            <div class="vote-title">
+                hackathon 能做个东西
+            </div>
+            <div class="vote-datetime">
+                2018-6-13
+            </div>
+            <div class="vote-info">
+                不能的,做东西是不可能做东西的。。
+            </div>
+            <div class="vote-options">
+                <div class="vote-option" title="不可能的">
+                    能
+                </div>
+                <div class="vote-option" title="" 不可能的>
+                    不可能的
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      is_welcome: false,
+      is_content: false,
+      is_home: true,
+      is_rules: false,
+      is_mine: false,
+      is_square: false,
+      is_vote: false,
+      promise_title: '',
+      promise_true: '',
+      promise_false: '',
+      promise_extra: '',
+      username: '',
+      endTime: '',
+      username_flag: false,
+      squareList: [],
+      mineList: [],
+    },
+    methods: {
+      setUsername() {
+        const username = this.username;
+        localStorage.setItem('username', username);
+        this.username_flag = false;
+      },
+      home() {
+        this.is_content = false;
+        this.is_home = true;
+        this.is_welcome = false;
+        this.is_rules = false;
+        this.is_square = false;
+        this.is_mine = false;
+        this.is_vote = false;
+        this.username_flag = false;
+      },
+      next() {
+        const flag = this.checkUser();
+        if (!flag) {
+          this.is_welcome = false;
+          this.is_content = true;
+          this.is_home = false;
+          this.is_rules = false;
+          this.is_square = false;
+          this.is_mine = false;
+          this.is_vote = false;
+        }
+      },
+      prev() {
+        this.is_content = false;
+        this.is_welcome = true;
+        this.is_rules = false;
+        this.is_square = false;
+        this.is_mine = false;
+        this.is_vote = false;
+        this.username_flag = false;
+      },
+      rules() {
+        this.is_content = false;
+        this.is_welcome = false;
+        this.is_home = false;
+        this.is_rules = true;
+        this.is_square = false;
+        this.is_mine = false;
+        this.is_vote = false;
+        this.username_flag = false;
+      },
+      square() {
+        const self = this;
+        self.is_content = false;
+        self.is_welcome = false;
+        self.is_home = false;
+        self.is_rules = false;
+        self.is_square = true;
+        self.is_mine = false;
+        self.is_vote = false;
+        self.username_flag = false;
+        const url = 'http://sf.avatars.vip/api/v1/articles';
+        $.get(url, (data) => {
+          self.squareList = data;
+        });
+      },
+      mine() {
+        const self = this;
+        const flag = self.checkUser();
+        if (!flag) {
+          self.is_content = false;
+          self.is_welcome = false;
+          self.is_home = false;
+          self.is_rules = false;
+          self.is_square = false;
+          self.is_mine = true;
+          self.is_vote = false;
+          const url = 'http://sf.avatars.vip/api/v1/articles';
+          const username = self.username;
+          $.get(url, { author: username }, (data) => {
+            self.mineList = data;
+          });
+        }
+      },
+      vote(id) {
+        const flag = this.checkUser();
+        if (!flag) {
+          this.is_content = false;
+          this.is_welcome = false;
+          this.is_home = false;
+          this.is_rules = false;
+          this.is_square = false;
+          this.is_mine = false;
+          this.is_vote = true;
+          const url = `http://sf.avatars.vip/api/v1/articles/${id}`;
+          $.get(url, (data) => {
+            console.log(data);
+          });
+        }
+
+      },
+      checkUser() {
+        const username = localStorage.getItem('username');
+        if (username === null) {
+          this.username_flag = true;
+        } else {
+          this.username = username;
+        }
+        return this.username_flag;
+      },
+      submit() {
+        const self = this;
+        const url = 'http://sf.avatars.vip/api/v1/articles';
+        const data = {
+          title: self.promise_title,
+          author: self.username,
+          content: self.promise_extra,
+          option1: self.promise_true,
+          option2: self.promise_false,
+          limit_time: Math.ceil(new Date(self.endTime).valueOf() / 1000),
+        };
+
+        $.ajax(url, {
+          data,
+          method: 'POST',
+        }, (res) => {
+          console.log(res);
+        });
+      },
+    },
+    beforeMount() {
+    },
+  });
+</script>
+
+</html>
