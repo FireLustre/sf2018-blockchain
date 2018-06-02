@@ -21,6 +21,20 @@
 
 <body>
 <div id="app">
+    <!--<div style="position: absolute;">{{username}}</div>-->
+    <div class="username-modal-mask" v-show="username_flag">
+        <div class="username-modal">
+            <!--<div class="modal-title">-->
+            <!--请输入用户名-->
+            <!--</div>-->
+            <div class="modal-body">
+                <input type="text" placeholder="请输入用户名" v-model="username">
+                <div class="button" @click="setUsername">
+                    确定
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="left-menu">
         <img src="./static/img/logo.png" class="logo">
         <div class="slogan">
@@ -37,36 +51,31 @@
         <div class="button" @click="next">
             发起Promise
         </div>
-
     </div>
-    <div class="welcome" v-show="is_welcome">
-        <!--<h1 class="logo">-->
-        <!--Promise-->
-        <!--</h1>-->
-        <input type="text" placeholder="快来发起一个独一无二的promise" v-model="promise_title">
-        <div class="next" @click="next">许下 Promise
-            <i class="fa fa-angle-right"></i>
-        </div>
-    </div>
+    <!--<div class="welcome" v-show="is_welcome">-->
+    <!--<div class="username-modal">-->
+    <!---->
+    <!--</div>-->
+    <!--</div>-->
     <div class="promise-content" v-show="is_content">
         <!--<div @click="prev">上一步</div>-->
         <!--<h2>{{promise_title}}</h2>-->
         <div class="form">
-            <div class="options true" v-model="promise_title">
+            <div class="options true">
                 <label for="true">Promise 的标题</label>
-                <input id="true" type="text" placeholder="Promise 的标题">
+                <input id="true" type="text" placeholder="Promise 的标题" v-model="promise_title">
             </div>
-            <div class="options true" v-model="promise_true">
+            <div class="options true">
                 <label for="true">正面的结果</label>
-                <input id="true" type="text" placeholder="请输入正面的结果">
+                <input id="true" type="text" placeholder="请输入正面的结果" v-model="promise_true">
             </div>
-            <div class="options false" v-model="promise_false">
+            <div class="options false">
                 <label for="false">反面的结果</label>
-                <input id="false" type="text" placeholder="请输入反面的结果">
+                <input id="false" type="text" placeholder="请输入反面的结果" v-model="promise_false">
             </div>
-            <div class="options addtional" v-model="promise_extra">
+            <div class="options addtional">
                 <label for="extra">输入附加内容</label>
-                <input id="extra" type="text" placeholder="请输入附加内容">
+                <input id="extra" type="text" placeholder="请输入附加内容" v-model="promise_extra">
             </div>
             <!--<div class="options">-->
             <!--<label for="startTime"></label>-->
@@ -95,41 +104,11 @@
 
     <div class="promise-square" v-show="is_square">
         <div class="square-wrapper">
-            <div class="topic-item" @click="vote">
-                <h2>HACKaTHON 不能得奖</h2>
-                <p>2018/06/03</p>
-            </div>
-            <div class="topic-item">
-                <h2>HACKaTHON 不能得奖</h2>
-                <p>2018/06/03</p>
-            </div>
-            <div class="topic-item">
-                <h2>HACKaTHON 不能得奖</h2>
-                <p>2018/06/03</p>
-            </div>
-            <div class="topic-item">
-                <h2>HACKaTHON 不能得奖</h2>
-                <p>2018/06/03</p>
-            </div>
-            <div class="topic-item">
-                <h2>HACKaTHON 不能得奖</h2>
-                <p>2018/06/03</p>
-            </div>
-            <div class="topic-item">
-                <h2>HACKaTHON 不能得奖</h2>
-                <p>2018/06/03</p>
-            </div>
-            <div class="topic-item">
-                <h2>HACKaTHON 不能得奖</h2>
-                <p>2018/06/03</p>
-            </div>
-            <div class="topic-item">
-                <h2>HACKaTHON 不能得奖</h2>
-                <p>2018/06/03</p>
-            </div>
-            <div class="topic-item">
-                <h2>HACKaTHON 不能得奖</h2>
-                <p>2018/06/03</p>
+            <div class="topic-item" @click="vote(item.id)" v-for="item in squareList" :key="item.title">
+                <h2>{{item.title}}</h2>
+                <p style="font-size: 15px ;transform: translate(0,10px)">发起者：{{item.author}}</p>
+                <p>{{new Date(item.limit_time*1000).toLocaleString()}}</p>
+                <!--<p>内容：{{item.content}}</p>-->
             </div>
         </div>
     </div>
@@ -141,17 +120,11 @@
         <div class="my-topic">
             <header>我的话题</header>
             <div class="topic-list">
-                <div class="topic-item">
-                    <h2>HACKaTHON 不能得奖</h2>
-                    <p>2018/06/03</p>
-                </div>
-                <div class="topic-item">
-                    <h2>HACKaTHON 不能得奖</h2>
-                    <p>2018/06/03</p>
-                </div>
-                <div class="topic-item">
-                    <h2>HACKaTHON 不能得奖</h2>
-                    <p>2018/06/03</p>
+                <div class="topic-item" @click="vote(item.id)" v-for="item in mineList" :key="item.title">
+                    <h2>{{item.title}}</h2>
+                    <p style="font-size: 15px ;transform: translate(0,10px)">发起者：{{item.author}}</p>
+                    <p>{{new Date(item.limit_time*1000).toLocaleString()}}</p>
+                    <!--<p>内容：{{item.content}}</p>-->
                 </div>
             </div>
         </div>
@@ -171,7 +144,7 @@
                 <div class="vote-option" title="不可能的">
                     能
                 </div>
-                <div class="vote-option" title=""不可能的>
+                <div class="vote-option" title="" 不可能的>
                     不可能的
                 </div>
             </div>
@@ -180,6 +153,7 @@
 </div>
 </body>
 <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script>
   new Vue({
     el: '#app',
@@ -195,8 +169,18 @@
       promise_true: '',
       promise_false: '',
       promise_extra: '',
+      username: '',
+      endTime: '',
+      username_flag: false,
+      squareList: [],
+      mineList: [],
     },
     methods: {
+      setUsername() {
+        const username = this.username;
+        localStorage.setItem('username', username);
+        this.username_flag = false;
+      },
       home() {
         this.is_content = false;
         this.is_home = true;
@@ -205,15 +189,19 @@
         this.is_square = false;
         this.is_mine = false;
         this.is_vote = false;
+        this.username_flag = false;
       },
       next() {
-        this.is_welcome = false;
-        this.is_content = true;
-        this.is_home = false;
-        this.is_rules = false;
-        this.is_square = false;
-        this.is_mine = false;
-        this.is_vote = false;
+        const flag = this.checkUser();
+        if (!flag) {
+          this.is_welcome = false;
+          this.is_content = true;
+          this.is_home = false;
+          this.is_rules = false;
+          this.is_square = false;
+          this.is_mine = false;
+          this.is_vote = false;
+        }
       },
       prev() {
         this.is_content = false;
@@ -222,6 +210,7 @@
         this.is_square = false;
         this.is_mine = false;
         this.is_vote = false;
+        this.username_flag = false;
       },
       rules() {
         this.is_content = false;
@@ -231,37 +220,88 @@
         this.is_square = false;
         this.is_mine = false;
         this.is_vote = false;
+        this.username_flag = false;
       },
       square() {
-        this.is_content = false;
-        this.is_welcome = false;
-        this.is_home = false;
-        this.is_rules = false;
-        this.is_square = true;
-        this.is_mine = false;
-        this.is_vote = false;
+        const self = this;
+        self.is_content = false;
+        self.is_welcome = false;
+        self.is_home = false;
+        self.is_rules = false;
+        self.is_square = true;
+        self.is_mine = false;
+        self.is_vote = false;
+        self.username_flag = false;
+        const url = 'http://sf.avatars.vip/api/v1/articles';
+        $.get(url, (data) => {
+          self.squareList = data;
+        });
       },
       mine() {
-        this.is_content = false;
-        this.is_welcome = false;
-        this.is_home = false;
-        this.is_rules = false;
-        this.is_square = false;
-        this.is_mine = true;
-        this.is_vote = false;
+        const self = this;
+        const flag = self.checkUser();
+        if (!flag) {
+          self.is_content = false;
+          self.is_welcome = false;
+          self.is_home = false;
+          self.is_rules = false;
+          self.is_square = false;
+          self.is_mine = true;
+          self.is_vote = false;
+          const url = 'http://sf.avatars.vip/api/v1/articles';
+          const username = self.username;
+          $.get(url, { author: username }, (data) => {
+            self.mineList = data;
+          });
+        }
       },
-      vote() {
-        this.is_content = false;
-        this.is_welcome = false;
-        this.is_home = false;
-        this.is_rules = false;
-        this.is_square = false;
-        this.is_mine = false;
-        this.is_vote = true;
+      vote(id) {
+        const flag = this.checkUser();
+        if (!flag) {
+          this.is_content = false;
+          this.is_welcome = false;
+          this.is_home = false;
+          this.is_rules = false;
+          this.is_square = false;
+          this.is_mine = false;
+          this.is_vote = true;
+          const url = `http://sf.avatars.vip/api/v1/articles/${id}`;
+          $.get(url, (data) => {
+            console.log(data);
+          });
+        }
+
+      },
+      checkUser() {
+        const username = localStorage.getItem('username');
+        if (username === null) {
+          this.username_flag = true;
+        } else {
+          this.username = username;
+        }
+        return this.username_flag;
       },
       submit() {
-        
+        const self = this;
+        const url = 'http://sf.avatars.vip/api/v1/articles';
+        const data = {
+          title: self.promise_title,
+          author: self.username,
+          content: self.promise_extra,
+          option1: self.promise_true,
+          option2: self.promise_false,
+          limit_time: Math.ceil(new Date(self.endTime).valueOf() / 1000),
+        };
+
+        $.ajax(url, {
+          data,
+          method: 'POST',
+        }, (res) => {
+          console.log(res);
+        });
       },
+    },
+    beforeMount() {
     },
   });
 </script>
