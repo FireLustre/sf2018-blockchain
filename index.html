@@ -58,6 +58,15 @@
             align-items: center;
             background-color: #bebebe;
         }
+
+        .promise-content input {
+            width: 70%;
+            height: 34px;
+        }
+
+        .promise-content .options {
+
+        }
     </style>
     <title>Promise</title>
 </head>
@@ -74,11 +83,11 @@
         <div>上一步</div>
         <h2>{{promise_title}}</h2>
         <div class="options true">
-            <label for="true"></label>
+            <label for="true">正向结果</label>
             <input id="true" type="text" placeholder="请输入正面的结果">
         </div>
         <div class="options false">
-            <label for="false"></label>
+            <label for="false">反向结果</label>
             <input id="false" type="text" placeholder="请输入反面的结果">
         </div>
     </div>
