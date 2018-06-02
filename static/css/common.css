@@ -4,10 +4,15 @@ body {
     height: 100%;
     padding: 0;
     margin: 0;
+    overflow-y: hidden;
 }
 
 *{
     outline-color: #42da98;
+}
+
+h2 {
+    font-size: 22px;
 }
 
 #app {

@@ -88,11 +88,11 @@
 
 .promise-content .options label {
     position: absolute;
-    font-size: 12px;
+    font-size: 16px;
     left: 60px;
-    top: -8px;
+    top: -10px;
     color: #ffffff;
-    background-color: rgba(0, 0, 0, .5);
+    background-color: rgba(0, 0, 0, .7);
 }
 
 .promise-content .options .button {
@@ -308,8 +308,8 @@
 .vote-options {
     position: absolute;
     bottom: 30px;
-    left: 0;
-    width: 100%;
+    /* left: 0px; */
+    width: 90%;
     display: flex;
     justify-content: space-around;
 }
@@ -410,3 +410,6 @@
     color: #000;
 }
 
+.topic-item .date {
+    font-size: 14px;
+}
