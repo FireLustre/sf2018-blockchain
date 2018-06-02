@@ -16,13 +16,13 @@
     </style>
     <link rel="stylesheet" href="static/css/common.css">
     <link rel="stylesheet" href="static/css/index.css">
-    <title>Promise</title>
+    <title>Opinoin</title>
 </head>
 
 <body>
 <div id="app">
     <!--<div style="position: absolute;">{{username}}</div>-->
-    <div class="username-modal-mask" v-show="username_flag">
+    <div class="username-modal-mask" :class="username_flag ? 'in':'out'">
         <div class="username-modal">
             <!--<div class="modal-title">-->
             <!--请输入用户名-->
@@ -38,7 +38,7 @@
     <div class="left-menu">
         <img src="./static/img/logo.png" class="logo">
         <div class="slogan">
-            <p>SELECTING A OR B</p>
+            <p>SEEK YOUR TRUTH</p>
         </div>
         <ul>
             <li :class="(is_home)?'active':''"><a href="#" @click="home">首页</a></li>
@@ -47,105 +47,125 @@
             <li :class="(is_rules)?'active':''"><a href="#" @click="rules">规则说明</a></li>
         </ul>
     </div>
-    <div class="home" v-show="is_home">
-        <div class="button" @click="next">
-            发起Promise
+    <div class="right-wrapper">
+        <div class="home" :class="is_home ? 'in':'out'">
+            <div class="button" @click="next">
+                发起Topic
+            </div>
         </div>
-    </div>
-    <!--<div class="welcome" v-show="is_welcome">-->
-    <!--<div class="username-modal">-->
-    <!---->
-    <!--</div>-->
-    <!--</div>-->
-    <div class="promise-content" v-show="is_content">
-        <!--<div @click="prev">上一步</div>-->
-        <!--<h2>{{promise_title}}</h2>-->
-        <div class="form">
-            <div class="options true">
-                <label for="true">Promise 的标题</label>
-                <input id="true" type="text" placeholder="Promise 的标题" v-model="promise_title">
-            </div>
-            <div class="options true">
-                <label for="true">正面的结果</label>
-                <input id="true" type="text" placeholder="请输入正面的结果" v-model="promise_true">
-            </div>
-            <div class="options false">
-                <label for="false">反面的结果</label>
-                <input id="false" type="text" placeholder="请输入反面的结果" v-model="promise_false">
-            </div>
-            <div class="options addtional">
-                <label for="extra">输入附加内容</label>
-                <input id="extra" type="text" placeholder="请输入附加内容" v-model="promise_extra">
-            </div>
-            <!--<div class="options">-->
-            <!--<label for="startTime"></label>-->
-            <!--<input type="datetime-local" id="startTime" v-model="startTime">-->
-            <!--</div>-->
+        <!--<div class="welcome" v-show="is_welcome">-->
+        <!--<div class="username-modal">-->
+        <!---->
+        <!--</div>-->
+        <!--</div>-->
+        <div class="promise-content" :class="is_content ? 'in':'out'">
+            <!--<div @click="prev">上一步</div>-->
+            <!--<h2>{{promise_title}}</h2>-->
+            <div class="form">
+                <div class="options true">
+                    <label for="title">Promise 的标题</label>
+                    <input id="title" type="text" placeholder="Promise 的标题" v-model="promise_title">
+                </div>
+                <div class="options true">
+                    <label for="true">请输入观点一</label>
+                    <input id="true" type="text" placeholder="请输入观点一" v-model="promise_true">
+                </div>
+                <div class="options false">
+                    <label for="false">请输入观点二</label>
+                    <input id="false" type="text" placeholder="请输入观点二" v-model="promise_false">
+                </div>
+                <div class="options addtional">
+                    <label for="extra">输入附加内容</label>
+                    <input id="extra" type="text" placeholder="请输入附加内容" v-model="promise_extra">
+                </div>
+                <!--<div class="options">-->
+                <!--<label for="startTime"></label>-->
+                <!--<input type="datetime-local" id="startTime" v-model="startTime">-->
+                <!--</div>-->
 
-            <div class="options">
-                <label for="endTime">结束时间</label>
-                <input type="datetime-local" id="endTime" v-model="endTime">
-            </div>
-            <div class="options">
-                <div class="button" @click="submit">提交</div>
+                <div class="options">
+                    <label for="endTime">结束时间</label>
+                    <input type="datetime-local" id="endTime" v-model="endTime">
+                </div>
+                <div class="options">
+                    <div class="button" @click="submit">提交</div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="promise-rules" v-show="is_rules">
-        <div class="rules-wrapper">
-            <header>规则说明</header>
-            <ul>
-                <li>首先需要发起一个话题，可以分享给你的好友或公开</li>
-                <li>用户可参与话题，并选择支持的观点 A OR B</li>
-                <li>话题终止后，双方会根据输赢分配代币</li>
-            </ul>
+        <div class="promise-rules" :class=" is_rules ? 'in':'out'">
+            <div class="rules-wrapper">
+                <header>规则说明</header>
+                <ul>
+                    <li>首先需要发起一个话题，可以分享给你的好友或公开</li>
+                    <li>用户可参与话题，并选择支持的观点 A OR B</li>
+                    <li>话题终止后，双方会根据输赢分配代币</li>
+                </ul>
+            </div>
         </div>
-    </div>
 
-    <div class="promise-square" v-show="is_square">
-        <div class="square-wrapper">
-            <div class="topic-item" @click="vote(item.id)" v-for="item in squareList" :key="item.title">
-                <h2>{{item.title}}</h2>
-                <p style="font-size: 15px ;transform: translate(0,10px)">发起者：{{item.author}}</p>
-                <p>{{new Date(item.limit_time*1000).toLocaleString()}}</p>
-                <!--<p>内容：{{item.content}}</p>-->
-            </div>
-        </div>
-    </div>
-    <div class="promise-mine" v-show="is_mine">
-        <div class="my-fortune">
-            <header>我的代币</header>
-            <div class="fortune-value">20</div>
-        </div>
-        <div class="my-topic">
-            <header>我的话题</header>
-            <div class="topic-list">
-                <div class="topic-item" @click="vote(item.id)" v-for="item in mineList" :key="item.title">
+        <div class="promise-square" :class="is_square ? 'in':'out'">
+            <div class="square-wrapper">
+                <i class="fa fa-search"
+                   style="position: fixed; right: 5% ;margin-top:-80px;color:#fff; font-size: 30px"></i>
+                <div class="topic-item" @click="vote(item.id)" v-for="item in squareList" :key="item.title">
                     <h2>{{item.title}}</h2>
-                    <p style="font-size: 15px ;transform: translate(0,10px)">发起者：{{item.author}}</p>
-                    <p>{{new Date(item.limit_time*1000).toLocaleString()}}</p>
+                    <p style="font-size: 16px ;transform: translate(0,10px)">发起者：{{item.author}}</p>
+                    <p class="date">截止：{{new Date(item.limit_time*1000).toLocaleString()}}</p>
                     <!--<p>内容：{{item.content}}</p>-->
                 </div>
             </div>
         </div>
-    </div>
-    <div class="promise-vote" v-show="is_vote">
-        <div class="vote-wrapper">
-            <div class="vote-title">
-                hackathon 能做个东西
+        <div class="promise-mine" :class="is_mine ? 'in':'out'">
+            <div class="my-fortune">
+                <header>我的代币</header>
+                <div class="fortune-value">20</div>
             </div>
-            <div class="vote-datetime">
-                2018-6-13
-            </div>
-            <div class="vote-info">
-                不能的,做东西是不可能做东西的。。
-            </div>
-            <div class="vote-options">
-                <div class="vote-option" title="不可能的">
-                    能
+            <div class="my-topic">
+                <header>我的话题</header>
+                <div class="topic-list" v-if="mineList.length">
+                    <div class="topic-item" @click="vote(item.id)" v-for="item in mineList" :key="item.title">
+                        <h2>{{item.title}}</h2>
+                        <!--<p style="font-size: 15px ;transform: translate(0,10px)">发起者：{{item.author}}</p>-->
+                        <p>{{item.content}}</p>
+                        <p class="date">{{new Date(item.limit_time*1000).toLocaleString()}}</p>
+                        <!--<p>内容：{{item.content}}</p>-->
+                    </div>
                 </div>
-                <div class="vote-option" title="" 不可能的>
-                    不可能的
+                <div v-else style="color:#999; height: 200px; padding-top: 50px">
+                    还没有与你相关的话题
+                </div>
+            </div>
+        </div>
+        <div class="promise-vote" :class="is_vote ? 'in':'out'">
+            <div class="vote-wrapper">
+                <div class="vote-title">
+                    {{voteData.title}}
+                </div>
+                <div>发起人：{{voteData.author}}</div>
+                <div class="vote-datetime">
+                    截止时间：{{new Date(voteData.limit_time*1000).toLocaleString()}}
+                </div>
+                <div class="vote-info">
+                    内容：{{voteData.content}}
+                </div>
+                <div v-show="!(Date.now()<voteData.limit_time*1000 && username !== voteData.author && voteData.voted.indexOf(username) === -1)"
+                     class="vote-options">
+                    <h2>支持票数:</h2>
+                    <h2>
+                        {{voteData.option1}}: {{voteData.option1_num}}（票）
+                    </h2>
+                    <h2>
+                        {{voteData.option2}}: {{voteData.option2_num}}（票）
+                    </h2>
+                </div>
+                <div class="vote-options"
+                     v-show="(Date.now()<voteData.limit_time*1000 && username !== voteData.author && voteData.voted.indexOf(username) === -1)">
+                    <div class="vote-option" :title="voteData.option1" @click="makeVote(1)">
+                        {{voteData.option1}}
+                    </div>
+                    <div class="vote-option" :title="voteData.option2" @click="makeVote(2)">
+                        {{voteData.option2}}
+                    </div>
                 </div>
             </div>
         </div>
@@ -174,6 +194,18 @@
       username_flag: false,
       squareList: [],
       mineList: [],
+      voteData: {
+        author: '',
+        id: '',
+        option1: '',
+        option1_num: '',
+        option2: '',
+        option2_num: '',
+        title: '',
+        content: '',
+        answer: '',
+        voted: [],
+      },
     },
     methods: {
       setUsername() {
@@ -233,7 +265,7 @@
         self.is_vote = false;
         self.username_flag = false;
         const url = 'http://sf.avatars.vip/api/v1/articles';
-        $.get(url, (data) => {
+        $.get(url, { 'per-page': 20 }, (data) => {
           self.squareList = data;
         });
       },
@@ -250,13 +282,14 @@
           self.is_vote = false;
           const url = 'http://sf.avatars.vip/api/v1/articles';
           const username = self.username;
-          $.get(url, { author: username }, (data) => {
+          $.get(url, { author: username, 'per-page': 100 }, (data) => {
             self.mineList = data;
           });
         }
       },
       vote(id) {
         const flag = this.checkUser();
+        const self = this;
         if (!flag) {
           this.is_content = false;
           this.is_welcome = false;
@@ -267,7 +300,7 @@
           this.is_vote = true;
           const url = `http://sf.avatars.vip/api/v1/articles/${id}`;
           $.get(url, (data) => {
-            console.log(data);
+            self.voteData = data;
           });
         }
 
@@ -292,12 +325,22 @@
           option2: self.promise_false,
           limit_time: Math.ceil(new Date(self.endTime).valueOf() / 1000),
         };
-
-        $.ajax(url, {
-          data,
-          method: 'POST',
-        }, (res) => {
-          console.log(res);
+        $.post(url, data, () => {
+          self.mine();
+        });
+      },
+      makeVote(value) {
+        const self = this;
+        const username = self.username;
+        const id = self.voteData.id;
+        const url = `http://sf.avatars.vip/api/v1/articles/vote`;
+        const data = {
+          aid: id,
+          author: username,
+          option: value,
+        };
+        $.post(url, data, (res) => {
+          self.vote(id);
         });
       },
     },
