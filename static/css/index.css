@@ -237,8 +237,9 @@
 }
 
 .square-wrapper {
+    position: relative;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-wrap: wrap;
     color: #ffffff;
     border: none;
@@ -251,6 +252,7 @@
     padding: 30px;
     margin-top: 30px;
     width: 32%;
+    margin-left: 1%;
     height: 260px;
     cursor: pointer;
     transition: all .3s;
@@ -280,7 +282,7 @@
     flex-wrap: wrap;
     height: 300px;
     overflow-y: scroll;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
 .vote-wrapper {

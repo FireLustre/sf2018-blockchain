@@ -38,7 +38,7 @@
     <div class="left-menu">
         <img src="./static/img/logo.png" class="logo">
         <div class="slogan">
-            <p>SELECTING A OR B</p>
+            <p>SEEK YOUR TRUTH</p>
         </div>
         <ul>
             <li :class="(is_home)?'active':''"><a href="#" @click="home">首页</a></li>
@@ -104,6 +104,8 @@
 
     <div class="promise-square" v-show="is_square">
         <div class="square-wrapper">
+            <i class="fa fa-search"
+               style="position: fixed; right: 5% ;margin-top:-80px;color:#fff; font-size: 30px"></i>
             <div class="topic-item" @click="vote(item.id)" v-for="item in squareList" :key="item.title">
                 <h2>{{item.title}}</h2>
                 <p style="font-size: 15px ;transform: translate(0,10px)">发起者：{{item.author}}</p>
@@ -119,7 +121,7 @@
         </div>
         <div class="my-topic">
             <header>我的话题</header>
-            <div class="topic-list">
+            <div class="topic-list" v-if="mineList.length">
                 <div class="topic-item" @click="vote(item.id)" v-for="item in mineList" :key="item.title">
                     <h2>{{item.title}}</h2>
                     <p style="font-size: 15px ;transform: translate(0,10px)">发起者：{{item.author}}</p>
@@ -127,25 +129,39 @@
                     <!--<p>内容：{{item.content}}</p>-->
                 </div>
             </div>
+            <div v-else style="color:#999; height: 200px; padding-top: 50px">
+                还没有与你相关的话题
+            </div>
         </div>
     </div>
     <div class="promise-vote" v-show="is_vote">
         <div class="vote-wrapper">
             <div class="vote-title">
-                hackathon 能做个东西
+                {{voteData.title}}
             </div>
+            <div>发起人：{{voteData.author}}</div>
             <div class="vote-datetime">
-                2018-6-13
+                截止时间：{{new Date(voteData.limit_time*1000).toLocaleString()}}
             </div>
             <div class="vote-info">
-                不能的,做东西是不可能做东西的。。
+                内容：{{voteData.content}}
             </div>
-            <div class="vote-options">
-                <div class="vote-option" title="不可能的">
-                    能
+
+            <div v-show="!(Date.now()<voteData.limit_time*1000 && username !== voteData.author)" class="vote-options">
+                <h2>支持率:</h2>
+                <h2>
+                    {{voteData.option1}}: {{voteData.option1_num}}（票）
+                </h2>
+                <h2>
+                    {{voteData.option2}}: {{voteData.option2_num}}（票）
+                </h2>
+            </div>
+            <div class="vote-options" v-show="(Date.now()<voteData.limit_time*1000 && username !== voteData.author)">
+                <div class="vote-option" :title="voteData.option1" @click="makeVote(1)">
+                    {{voteData.option1}}
                 </div>
-                <div class="vote-option" title="" 不可能的>
-                    不可能的
+                <div class="vote-option" :title="voteData.option2" @click="makeVote(2)">
+                    {{voteData.option2}}
                 </div>
             </div>
         </div>
@@ -174,6 +190,17 @@
       username_flag: false,
       squareList: [],
       mineList: [],
+      voteData: {
+        author: '',
+        id: '',
+        option1: '',
+        option1_num: '',
+        option2: '',
+        option2_num: '',
+        title: '',
+        content: '',
+        answer: '',
+      },
     },
     methods: {
       setUsername() {
@@ -233,7 +260,7 @@
         self.is_vote = false;
         self.username_flag = false;
         const url = 'http://sf.avatars.vip/api/v1/articles';
-        $.get(url, (data) => {
+        $.get(url, { 'per-page': 20 }, (data) => {
           self.squareList = data;
         });
       },
@@ -250,13 +277,14 @@
           self.is_vote = false;
           const url = 'http://sf.avatars.vip/api/v1/articles';
           const username = self.username;
-          $.get(url, { author: username }, (data) => {
+          $.get(url, { author: username, 'per-page': 100 }, (data) => {
             self.mineList = data;
           });
         }
       },
       vote(id) {
         const flag = this.checkUser();
+        const self = this;
         if (!flag) {
           this.is_content = false;
           this.is_welcome = false;
@@ -267,7 +295,7 @@
           this.is_vote = true;
           const url = `http://sf.avatars.vip/api/v1/articles/${id}`;
           $.get(url, (data) => {
-            console.log(data);
+            self.voteData = data;
           });
         }
 
@@ -292,11 +320,21 @@
           option2: self.promise_false,
           limit_time: Math.ceil(new Date(self.endTime).valueOf() / 1000),
         };
-
-        $.ajax(url, {
-          data,
-          method: 'POST',
-        }, (res) => {
+        $.post(url, data, () => {
+          self.mine();
+        });
+      },
+      makeVote(value) {
+        const self = this;
+        const username = self.username;
+        const id = self.voteData.id;
+        const url = `http://sf.avatars.vip/api/v1/articles/vote`;
+        const data = {
+          aid: id,
+          author: username,
+          option: value,
+        };
+        $.post(url, data, (res) => {
           console.log(res);
         });
       },
