@@ -27,10 +27,10 @@
             <p>SELECTING A OR B</p>
         </div>
         <ul>
-            <li><a href="#" @click="home">首页</a></li>
-            <li><a href="#">我的</a></li>
-            <li><a href="#">话题广场</a></li>
-            <li><a href="#">规则说明</a></li>
+            <li :class="(is_home)?'active':''"><a href="#" @click="home">首页</a></li>
+            <li :class="(is_mine)?'active':''"><a href="#" @click="mine">我的</a></li>
+            <li :class="(is_square)?'active':''"><a href="#" @click="square">话题广场</a></li>
+            <li :class="(is_rules)?'active':''"><a href="#" @click="rules">规则说明</a></li>
         </ul>
     </div>
     <div class="home" v-show="is_home">
@@ -82,8 +82,100 @@
             </div>
         </div>
     </div>
-    <div class="promise-rules">
+    <div class="promise-rules" v-show="is_rules">
+        <div class="rules-wrapper">
+            <header>规则说明</header>
+            <ul>
+                <li>首先需要发起一个话题，可以分享给你的好友或公开</li>
+                <li>用户可参与话题，并选择支持的观点 A OR B</li>
+                <li>话题终止后，双方会根据输赢分配代币</li>
+            </ul>
+        </div>
+    </div>
 
+    <div class="promise-square" v-show="is_square">
+        <div class="square-wrapper">
+            <div class="topic-item" @click="vote">
+                <h2>HACKaTHON 不能得奖</h2>
+                <p>2018/06/03</p>
+            </div>
+            <div class="topic-item">
+                <h2>HACKaTHON 不能得奖</h2>
+                <p>2018/06/03</p>
+            </div>
+            <div class="topic-item">
+                <h2>HACKaTHON 不能得奖</h2>
+                <p>2018/06/03</p>
+            </div>
+            <div class="topic-item">
+                <h2>HACKaTHON 不能得奖</h2>
+                <p>2018/06/03</p>
+            </div>
+            <div class="topic-item">
+                <h2>HACKaTHON 不能得奖</h2>
+                <p>2018/06/03</p>
+            </div>
+            <div class="topic-item">
+                <h2>HACKaTHON 不能得奖</h2>
+                <p>2018/06/03</p>
+            </div>
+            <div class="topic-item">
+                <h2>HACKaTHON 不能得奖</h2>
+                <p>2018/06/03</p>
+            </div>
+            <div class="topic-item">
+                <h2>HACKaTHON 不能得奖</h2>
+                <p>2018/06/03</p>
+            </div>
+            <div class="topic-item">
+                <h2>HACKaTHON 不能得奖</h2>
+                <p>2018/06/03</p>
+            </div>
+        </div>
+    </div>
+    <div class="promise-mine" v-show="is_mine">
+        <div class="my-fortune">
+            <header>我的代币</header>
+            <div class="fortune-value">20</div>
+        </div>
+        <div class="my-topic">
+            <header>我的话题</header>
+            <div class="topic-list">
+                <div class="topic-item">
+                    <h2>HACKaTHON 不能得奖</h2>
+                    <p>2018/06/03</p>
+                </div>
+                <div class="topic-item">
+                    <h2>HACKaTHON 不能得奖</h2>
+                    <p>2018/06/03</p>
+                </div>
+                <div class="topic-item">
+                    <h2>HACKaTHON 不能得奖</h2>
+                    <p>2018/06/03</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="promise-vote" v-show="is_vote">
+        <div class="vote-wrapper">
+            <div class="vote-title">
+                hackathon 能做个东西
+            </div>
+            <div class="vote-datetime">
+                2018-6-13
+            </div>
+            <div class="vote-info">
+                不能的,做东西是不可能做东西的。。
+            </div>
+            <div class="vote-options">
+                <div class="vote-option" title="不可能的">
+                    能
+                </div>
+                <div class="vote-option" title=""不可能的>
+                    不可能的
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>
@@ -95,6 +187,10 @@
       is_welcome: false,
       is_content: false,
       is_home: true,
+      is_rules: false,
+      is_mine: false,
+      is_square: false,
+      is_vote: false,
       promise_title: '',
       promise_true: '',
       promise_false: '',
@@ -105,15 +201,63 @@
         this.is_content = false;
         this.is_home = true;
         this.is_welcome = false;
+        this.is_rules = false;
+        this.is_square = false;
+        this.is_mine = false;
+        this.is_vote = false;
       },
       next() {
         this.is_welcome = false;
         this.is_content = true;
         this.is_home = false;
+        this.is_rules = false;
+        this.is_square = false;
+        this.is_mine = false;
+        this.is_vote = false;
       },
       prev() {
         this.is_content = false;
         this.is_welcome = true;
+        this.is_rules = false;
+        this.is_square = false;
+        this.is_mine = false;
+        this.is_vote = false;
+      },
+      rules() {
+        this.is_content = false;
+        this.is_welcome = false;
+        this.is_home = false;
+        this.is_rules = true;
+        this.is_square = false;
+        this.is_mine = false;
+        this.is_vote = false;
+      },
+      square() {
+        this.is_content = false;
+        this.is_welcome = false;
+        this.is_home = false;
+        this.is_rules = false;
+        this.is_square = true;
+        this.is_mine = false;
+        this.is_vote = false;
+      },
+      mine() {
+        this.is_content = false;
+        this.is_welcome = false;
+        this.is_home = false;
+        this.is_rules = false;
+        this.is_square = false;
+        this.is_mine = true;
+        this.is_vote = false;
+      },
+      vote() {
+        this.is_content = false;
+        this.is_welcome = false;
+        this.is_home = false;
+        this.is_rules = false;
+        this.is_square = false;
+        this.is_mine = false;
+        this.is_vote = true;
       },
       submit() {
         
